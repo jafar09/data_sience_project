@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+Logged in as : {{request.user.username}}
+{% else %}
+    Not logged in.
+{% endif %}
+<br><br>
+<a href="{% url 'logout' %}" class="btn btn-danger">logout</a>
+<h1> salom dunyo</h1>
+{% endblock content %}
