@@ -1,28 +1,22 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+#!/usr/bin/env python
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
 
-# Ma'lumotlarni yuklash
-df = pd.read_csv('your_data.csv')
 
-# Ma'lumotlarni o'rganish
-print(df.head())
-print(df.describe())
-print(df.info())
+def main():
+    """Run administrative tasks."""
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(sys.argv)
 
-# Vizualizatsiyalar
-# Histograma
-plt.figure(figsize=(10, 6))
-sns.histplot(df['your_column'])
-plt.title('Your Column Distribution')
-plt.show()
 
-# Pairplot
-sns.pairplot(df)
-plt.show()
-
-# Correlation matrix
-plt.figure(figsize=(12, 8))
-sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
-plt.title('Correlation Matrix')
-plt.show()
+if __name__ == '__main__':
+    main()

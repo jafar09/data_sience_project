@@ -8,6 +8,11 @@ from logs.models import Log
 from django.core.files.base import ContentFile
 from django.contrib.auth.models import User
 from profiles.models import Profile
+from django.shortcuts import render
+from django.http import HttpResponse
+import nbformat
+from nbconvert import HTMLExporter
+from nbconvert.preprocessors import ExecutePreprocessor
 
 def login_view(request):
     return render(request, 'login.html', {})
@@ -44,12 +49,9 @@ def find_user_view(request):
                 login(request, user)
                 return JsonResponse({'success': True})
         return JsonResponse({'success': False})
-    # return render(request, 'main.html', {})
+    return render(request, 'main.html', {})
 
-    
-def HomePage_view(request):
-    pass
-
+# registratsiya qismi boshlandi
 def SignupPage_view(request):
     if request.method=='POST':
         uname=request.POST.get('username')
@@ -65,7 +67,9 @@ def SignupPage_view(request):
             my_user.save()
             return redirect('login')
     return render (request, 'signup.html')
+# registratsiya qismi tugadi
 
+# login qismi boshlandi
 def LoginPage1_view(request):
     if request.method=='POST':
         username=request.POST.get('username')
@@ -78,7 +82,42 @@ def LoginPage1_view(request):
             return HttpResponse ("Username or Password is incorrect!!!")
 
     return render (request,'login1.html')
+# login qismi tugadi
 
 def LogoutPage(request):
     logout(request)
     return redirect('login')
+
+
+# eda_view boshlandi
+def eda_view(request):
+    if request.method == 'GET':
+        return render(request, 'EDA.html')
+
+    elif request.method == 'POST':
+        notebook_path = 'C:/Users/Lenovo/Desktop/django-faceid/jupeter.ipynb'
+        try:
+            with open(notebook_path, 'r', encoding='utf-8') as f:
+                nb = nbformat.read(f, as_version=4)
+
+            # Daftaringizni bajarish
+            ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
+            ep.preprocess(nb, {'metadata': {'path': './'}})
+
+            # Daftaringizni HTML formatiga o'zgartirish
+            html_exporter = HTMLExporter()
+            (body, resources) = html_exporter.from_notebook_node(nb)
+
+            # HTML kontentni qaytarish
+            return HttpResponse(body)
+
+        except UnicodeDecodeError as e:
+            return HttpResponse(f"UnicodeDecodeError: {e}", status=500)
+        except Exception as e:
+            return HttpResponse(f"Xato yuz berdi: {e}", status=500)
+    return render(request, 'EDA.html')
+
+ # eda_view tugadi
+
+ # eda_view tugadi
+# eda_view tugadi

@@ -25,6 +25,7 @@ from .views import (
     find_user_view,
     SignupPage_view,
     LoginPage1_view,
+    eda_view,
 )
 
 urlpatterns = [
@@ -35,6 +36,8 @@ urlpatterns = [
     path('classify/', find_user_view, name='classify'),
     path('SignupPage/', SignupPage_view, name='Signup'),
     path('LoginPage1/', LoginPage1_view, name='LoginPage1'),
+    path('eda/',eda_view, name='eda_view'),
+
 
 
 

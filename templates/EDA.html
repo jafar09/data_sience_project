@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <title>EDA</title>
+</head>
+<body>
+    <h1>EDA (Exploratory Data Analysis)</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Daftarning HTML formatiga o'zgartirish</button>
+    </form>
+</body>
+</html>
+{% endblock content %}
